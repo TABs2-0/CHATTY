@@ -91,6 +91,10 @@ class SignIn(ctk.CTk):
 
         self.usercontrol.Sign_in(ide, name, email, password, firstname, secondname, phonenumber)
         messagebox.showinfo("Info", "Sign In Successful")
+        self.destroy()
+
+        M=MainPage(password)
+        M.mainloop()
 
 
 if __name__ == '__main__':

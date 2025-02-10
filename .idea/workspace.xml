@@ -4,16 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f782d742-ade3-491a-8dbd-6817110113a1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/Chatty.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/App/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/App/control/ChatControl.py" afterDir="false" />
+    <list default="true" id="f782d742-ade3-491a-8dbd-6817110113a1" name="Changes" comment="CHATTY is a Messaging App That transmits data using socket.io this version is incomplete but has the socket dipendencies done">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/control/ChatControl.py" beforeDir="false" afterPath="$PROJECT_DIR$/App/control/ChatControl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/view/mainPage.py" beforeDir="false" afterPath="$PROJECT_DIR$/App/view/mainPage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/client_socket.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/client_socket.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,26 +25,52 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;TABs2-0&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/TABs2-0/CHATTY&quot;,
+    &quot;accountId&quot;: &quot;7bc3cc79-5b2f-4ae2-abbb-5318eec0a481&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2sjpsdaW5a5odhyToBnCS2stCx0" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Python.ChatModel.executor": "Run",
     "Python.UserModel.executor": "Run",
+    "Python.client_socket.executor": "Run",
     "Python.login.executor": "Run",
+    "Python.mainPage.executor": "Run",
+    "Python.server.executor": "Run",
     "Python.sign_in.executor": "Run",
     "Python.test.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/Tab's/PycharmProjects/Project",
+    "settings.editor.selected.configurable": "preferences.general"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Tab's\PycharmProjects\Chatty\images" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -66,6 +87,28 @@
       <option name="presentableId" value="Default" />
       <updated>1738979045732</updated>
     </task>
+    <task id="LOCAL-00001" summary="CHATTY is a Messaging App That transmits data using socket.io this version is incomplete but has the socket dipendencies done">
+      <option name="closed" value="true" />
+      <created>1739094414784</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1739094414784</updated>
+    </task>
+    <task id="LOCAL-00002" summary="CHATTY is a Messaging App That transmits data using socket.io this version is incomplete but has the socket dipendencies done">
+      <option name="closed" value="true" />
+      <created>1739094748683</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1739094748683</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="CHATTY is a Messaging App That transmits data using socket.io this version is incomplete but has the socket dipendencies done" />
+    <option name="LAST_COMMIT_MESSAGE" value="CHATTY is a Messaging App That transmits data using socket.io this version is incomplete but has the socket dipendencies done" />
   </component>
 </project>

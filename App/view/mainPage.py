@@ -2,13 +2,11 @@ import os.path
 import shutil
 import threading
 from tkinter import filedialog
-
+#import vlc
 import customtkinter as ctk
 from PIL import Image, ImageTk
-import tkinter as tk
-
 from App.control import ChatControl, UserControl
-from Client.client_socket import start_client, send_message, send_file
+from Client.client_socket import start_client, send_message, send_file, received_message, received_file
 
 
 class MainPage(ctk.CTk):
@@ -17,6 +15,7 @@ class MainPage(ctk.CTk):
         self.geometry("1200x700")
         self.title("Main Page")
         self.configure(fg_color="white")
+
         self.control = ChatControl.Chat_control()
         self.userconrol = UserControl.Usercontrol()
         self.username = UserControl.Usercontrol().ge_user_name(password)
@@ -25,6 +24,9 @@ class MainPage(ctk.CTk):
         self.frame_count = -1  #number of frames from o to n
         self.gif_frame = []  # array to store the frames
         self.stop = False
+        #self.instance = vlc.Instance()
+        #self.player = self.instance.media_player_new()
+        #self.audio_player = self.instance.media_player_new()
 
         # Navigation Bar
         self.nav_frame = ctk.CTkFrame(self, width=100, height=700, fg_color="#E6E6FA", corner_radius=20)
@@ -72,7 +74,7 @@ class MainPage(ctk.CTk):
                                        width=180, height=40, fg_color="#E6E6FA", corner_radius=20)
         self.search_bar.pack(pady=20)
 
-        #user_id = self.control.get_user_id_from_control(self.password)
+        self.user_id = self.control.get_user_id_from_control(self.password)
         #contacts = self.control.get_user_contact_from_control(user_id)
         #print(contacts)
         contacts = ["Ulysse", "JONATHAN", "Annelle", "Dylan", "Amy"]
@@ -83,6 +85,8 @@ class MainPage(ctk.CTk):
                                 corner_radius=20, command=self.contact_layout, image=ctk.CTkImage(
                     Image.open(f"C:/Users/Tab's/PycharmProjects/Chatty/images/{contact.lower()}.png")))
             btn.pack(pady=5)
+
+            #chat section
         self.chat_frame = ctk.CTkFrame(self, fg_color="white")
         self.chat_frame.pack(side="bottom", pady=5, padx=50, fill="x")
 
@@ -94,7 +98,8 @@ class MainPage(ctk.CTk):
                                               command=self.send_chat_message)
         self.send_message_btn.pack(side="left", padx=5)
 
-        self.select_media_btn = ctk.CTkButton(self.chat_frame, text="Select_File", width=80, fg_color="black")
+        self.select_media_btn = ctk.CTkButton(self.chat_frame, text="Select_File", width=80, fg_color="black",
+                                              command=self.send_media)
         self.select_media_btn.pack(side="left", padx=5)
 
     def contact_layout(self):
@@ -197,18 +202,54 @@ class MainPage(ctk.CTk):
         message = self.chat_entry.get()
         message_list.append(message)
         send_message(message)
-        for i in range( 0,len(message_list)):
-            step=2*(i+1)
+
+        for i, msg in enumerate(message_list):
+            step = 2 * (i + 1)
             self.message_label = ctk.CTkLabel(self, fg_color="#E6E6FA", corner_radius=20, text_color="black",
                                               text=message)
-            self.message_label.pack(side="right", anchor="sw", padx=10+step, pady=(5+step),fill="x")
+            self.message_label.pack(side="right", anchor="sw", padx=10, pady=(5 + step), fill="x")
 
             self.chat_entry.delete(0, "end")
 
-    def send_media(self, filepath):
+    def send_media(self):
+        filepath = filedialog.askopenfilename(filetypes=[("Image files", "*.png;*.jpg;*.jpeg")])
         send_file(filepath)
 
-    #for the backward button
+    """ def recieve_media(self):
+        file_info = received_file()
+        file_path = file_info[1]
+        filetype = file_info[0]
+        file_data = file_info[2]
+        with open(file_path, "wb") as file:
+            file.write(file_data)
+        if filetype in ["png", "jpg", "jpeg"]:
+            self.display_image(file_path)
+        elif filetype in ["mp4", "avi", "mkv"]:
+            self.play_video(file_path)
+        elif filetype in ["mp3", "wav"]:
+            self.play_audio(file_path)
+        print((file_info[0]))
+
+    def display_image(self, filepath):
+        img = Image.open(filepath)
+        img = img.resize((200, 200))
+        #img_tk = ImageTk.PhotoImage(img)
+        image = []
+        image.append(img)
+        for i in image:
+            self.message_label = ctk.CTkLabel(self, fg_color="#E6E6FA", corner_radius=20, text_color="black",
+                                              image=ctk.CTkImage(i))
+            self.message_label.pack(side="right", anchor="sw", padx=10, pady=5, fill="x")
+
+   def play_video(self, filepath):
+        self.player.set_mrl(filepath)
+        self.player.play()
+
+    def play_audio(self, filepath):
+        self.audio_player.set_mrl(filepath)
+        self.audio_player.play()
+    """
+
     def restore_original_ui(self):
         self.destroy()
         app = MainPage("Upass")
@@ -264,7 +305,59 @@ class MainPage(ctk.CTk):
             print(f"Error updating profile picture: {e}")
 
     def create_group(self):
-        pass
+        self.group_window = ctk.CTkToplevel(self, fg_color="white")
+        self.group_window.geometry("400x500")
+
+        ctk.CTkLabel(
+            self.group_window, text="Create Group", font=("Arial", 24, "bold"), text_color="black"
+        ).pack(pady=20)
+
+        fields = [
+            ("Group_id", "id"),
+            ("Group_name", "name"),
+            ("Description", "description"),
+        ]
+
+        self.entries = {}
+        for field_name, field_id in fields:
+            frame = ctk.CTkFrame(self.group_window, fg_color="#E6E6FA", corner_radius=10)
+            frame.pack(fill="x", padx=20, pady=5)
+
+            label = ctk.CTkLabel(frame, text=f"{field_name}:", font=("Arial", 14), text_color="black")
+            label.grid(row=0, column=0, padx=10, pady=5, sticky="w")
+
+            entry = ctk.CTkEntry(frame, fg_color="#E6E6FA", text_color="black", corner_radius=5)
+            entry.grid(row=0, column=1, padx=10, pady=5, sticky="ew")
+
+            frame.columnconfigure(1, weight=1)
+            self.entries[field_id] = entry
+
+        add_frame = ctk.CTkFrame(self.group_window, fg_color="#E6E6FA", corner_radius=10)
+        add_frame.pack(fill="x", padx=20, pady=5)
+
+        avatar_label = ctk.CTkLabel(add_frame, text="Avatar Entry:", font=("Arial", 14), text_color="black")
+        avatar_label.grid(row=0, column=0, padx=10, pady=5, sticky="w")
+
+        self.add_entry = ctk.CTkEntry(add_frame, fg_color="#E6E6FA", text_color="black", corner_radius=5)
+        self.add_entry.grid(row=0, column=1, padx=10, pady=5, sticky="ew")
+
+        self.upload_button = ctk.CTkButton(
+            self.group_window, text="Select Avatar", fg_color="#E6E6FA", hover_color="grey",
+            command=self.select_file, text_color="black"
+        )
+        self.upload_button.pack(pady=10)
+
+        submit_button = ctk.CTkButton(
+            self.group_window, text="Create", fg_color="#E6E6FA", hover_color="grey",
+            command=self.submit, text_color="black"
+        )
+        submit_button.pack(pady=20)
+
+    def select_file(self):
+        path = filedialog.askopenfilename(filetypes=[("Image files", "*.png;*.jpg;*.jpeg")])
+        entry_field = self.add_entry
+        entry_field.delete(0, "end")
+        entry_field.insert(0, path)
 
     def set_status_ui(self):
         self.status_window = ctk.CTkToplevel()
@@ -312,6 +405,7 @@ class MainPage(ctk.CTk):
         self.display_label.configure(image=self.current_frame)
 
         self.status_window.after(self.delay, self.play_gif)
+
     def stop_gif(self):
         self.stop = not self.stop
         if not self.stop:
@@ -319,6 +413,19 @@ class MainPage(ctk.CTk):
 
     def change_status(self):
         pass
+
+    def submit(self):
+        group_name = self.entries["name"].get()
+        des = self.entries["description"].get()
+        avatar = self.add_entry.get()
+        user_id = self.user_id
+
+        #if not self.control.db_connection_is_open():
+        #   print("Database connection is not open!")
+        #  return
+
+        print(group_name)
+        self.control.add_group(user_id, group_name, "group", user_id, des, avatar)
 
 
 if __name__ == "__main__":

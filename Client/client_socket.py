@@ -1,36 +1,37 @@
 import socketio
 import base64
+import os
 
 sio = socketio.Client()  # Create a Socket.IO client instance
 
 
 @sio.event
 def connect():
-
     print("Connected to Server")
-
 
 
 @sio.event
 def disconnect():
-
     print("Disconnected From Server")
 
 
 @sio.event
 def received_message(data):
-
     print(f"New message received: {data}")
 
 
 @sio.event
 def received_file(data):
-
-    print(f"New file received: {data['filename']}")
+    def receive_media(data):
+        filename = data["filename"]
+        filetype = filename.split(".")[-1].lower()
+        file_data = base64.b64decode(data["data"])
+        os.makedirs("received_files", exist_ok=True)
+        file_path = os.path.join("received_files", filename)
+        return filetype, file_path,file_data
 
 
 def send_message(text):
-
     sio.emit("send_messages", text)  # Ensure it matches the server's event name
 
 
@@ -45,9 +46,7 @@ def send_file(filepath):
 
 
 def start_client():
-
     sio.connect("http://localhost:5000")
-
 
 # Start the client
 start_client()

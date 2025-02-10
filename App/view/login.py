@@ -12,7 +12,7 @@ class LoginPage(ctk.CTk):
         super().__init__()
 
         self.geometry("600x450")
-        self.resizable(False, False)
+       # self.resizable(False, False)
         self.title("Login Page")
         self.usercontrol = Usercontrol()
 
@@ -53,9 +53,17 @@ class LoginPage(ctk.CTk):
         img = Image.open("C:/Users/Tab's/PycharmProjects/Chatty/images/annelle.png")
         photo = ctk.CTkImage(light_image=img, size=(100, 100))
 
+        ict_img = Image.open("C:/Users/Tab's/PycharmProjects/Chatty/images/ict.jpg")
+        ict_photo = ctk.CTkImage(light_image=ict_img, size=(100, 100))
+
         self.image_label = ctk.CTkLabel(self.left_frame, image=photo,height=150,width=150,text="")
         self.image_label.pack(pady=2,padx=0)
 
+        self.name_label = ctk.CTkLabel(self.left_frame, height=150, width=150, text="TABOUGUIA NGNOWA YOAN CABREL:ICTU20241135")
+        self.name_label.pack(pady=4, padx=0)
+
+        self.ict_label = ctk.CTkLabel(self.left_frame, image=ict_photo, height=150, width=150, text="")
+        self.ict_label.pack(pady=4, padx=4)
         # Right Section (Sign-in Prompt)
         self.right_frame = ctk.CTkFrame(self, fg_color="#7BDCC8", width=200, height=450)
         self.right_frame.pack(side="right", fill="both", expand=False)
